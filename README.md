@@ -4,7 +4,6 @@ This uses java socket and netty bytebuf to work and have many functions.
 
 ## Exemples
 *Simple server*
-
 ![simple server](https://i.ibb.co/G2WfJ8W/1.png)
 
 *Simple client*<br/>
