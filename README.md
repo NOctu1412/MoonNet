@@ -10,3 +10,5 @@ This uses java socket and netty bytebuf to work and have many functions.
 ![simple client](https://i.ibb.co/0txRn1R/2.png)
 
 **Go in src/tests for mor exemples !**
+
+(its full shit code I know, I'm a shit in networking)
