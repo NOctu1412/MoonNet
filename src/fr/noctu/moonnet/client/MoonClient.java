@@ -68,7 +68,10 @@ public class MoonClient {
                         if(!(packetSent >= packetHandler.getMaxPacketPerSecond())){
                             int packetLength = inputStream.readInt();
                             if(packetLength < packetHandler.getMaxPacketSize()) {
-                                packetHandler.handlePacketClient(this, inputStream.readInt(), Unpooled.wrappedBuffer(inputStream.readNBytes(packetLength)));
+                                int packetId = inputStream.readInt();
+                                byte[] buf = new byte[packetLength];
+                                inputStream.read(buf,0, packetLength);
+                                packetHandler.handlePacketClient(this, packetId, Unpooled.wrappedBuffer(buf));
                                 packetSent++;
                             }else
                                 inputStream.skipBytes(packetLength);

@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MoonNet:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/MoonNet_jar</output-path>
+    <root id="archive" name="MoonNet.jar">
+      <element id="module-output" name="MoonNet" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/netty-all-4.1.66.Final.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

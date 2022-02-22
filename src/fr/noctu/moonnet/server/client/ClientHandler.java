@@ -45,7 +45,10 @@ public class ClientHandler implements Runnable {
                     if(!(packetSent >= server.getPacketHandler().getMaxPacketPerSecond())){ //packet rating
                         int packetLength = inputStream.readInt();
                         if(packetLength < server.getPacketHandler().getMaxPacketSize()) { //packet size filter
-                            server.getPacketHandler().handlePacketServer(this, inputStream.readInt(), Unpooled.wrappedBuffer(inputStream.readNBytes(packetLength)));
+                            int packetId = inputStream.readInt();
+                            byte[] buf = new byte[packetLength];
+                            inputStream.read(buf,0, packetLength);
+                            server.getPacketHandler().handlePacketServer(this, packetId, Unpooled.wrappedBuffer(buf));
                             packetSent++;
                         } else {
                             inputStream.skipBytes(packetLength);

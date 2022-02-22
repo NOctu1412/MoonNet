@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class MoonServer {
     private final ServerSocket serverSocket;
-    private final String host;
+    //private final String host;
     private final int port, maxClientCount;
 
     private final ClientsManager clientsManager;
@@ -25,14 +25,13 @@ public class MoonServer {
     private boolean runningState = false;
 
     //CONSTRUCTORS//
-    public MoonServer(String host, int port, int maxClientCount, boolean traceBack) throws IOException {
-        this(host, port, maxClientCount);
+    public MoonServer(int port, int maxClientCount, boolean traceBack) throws IOException {
+        this(port, maxClientCount);
         this.traceBack = traceBack;
     }
 
-    public MoonServer(String host, int port, int maxClientCount) throws IOException {
-        this.serverSocket = new ServerSocket(port, maxClientCount, InetAddress.getByName(host));
-        this.host = host;
+    public MoonServer(int port, int maxClientCount) throws IOException {
+        this.serverSocket = new ServerSocket(port, maxClientCount);
         this.port = port;
         this.maxClientCount = maxClientCount;
         this.clientsManager = new ClientsManager(this, serverSocket);
@@ -78,9 +77,9 @@ public class MoonServer {
     }
 
     //UTILITIES//
-    public String getHost() {
+    /*public String getHost() {
         return host;
-    }
+    }*/
 
     public int getPort() {
         return port;

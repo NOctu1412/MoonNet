@@ -32,7 +32,7 @@ public class PacketHandler {
 
     public void addPacket(Packet packet){
         for (Packet p : packets) {
-            if(packet.getId() != p.getId()){
+            if(packet.getId() == p.getId()){
                 LogUtils.logError("Packet not registered due to duplicate id: " + packet.getId());
                 return;
             }
@@ -44,9 +44,9 @@ public class PacketHandler {
         for (Packet packet : packets) {
             if(packet.getId() == packetId) {
                 if(encryption != null)
-                    packet.fromByteArray(Unpooled.wrappedBuffer(encryption.decrypt(byteBuf.array()))).executeServer(server);
+                    packet.fromByteArray(Unpooled.wrappedBuffer(encryption.decrypt(byteBuf.array()))).executeServer(server, client);
                 else
-                    packet.fromByteArray(byteBuf).executeServer(server);
+                    packet.fromByteArray(byteBuf).executeServer(server, client);
             }
         }
     }

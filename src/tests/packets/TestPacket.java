@@ -3,6 +3,7 @@ package tests.packets;
 import fr.noctu.moonnet.client.MoonClient;
 import fr.noctu.moonnet.common.packet.Packet;
 import fr.noctu.moonnet.server.MoonServer;
+import fr.noctu.moonnet.server.client.ClientHandler;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 
@@ -40,7 +41,7 @@ public class TestPacket extends Packet {
     }
 
     @Override
-    public void executeServer(MoonServer server) {
+    public void executeServer(MoonServer server, ClientHandler clientHandler) {
         System.out.println(value);
         try {
             server.sendPacketToAll(new TestPacket(58));
