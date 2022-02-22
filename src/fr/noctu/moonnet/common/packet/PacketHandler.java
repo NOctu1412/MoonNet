@@ -11,6 +11,7 @@ import io.netty.buffer.Unpooled;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class PacketHandler {
     private final MoonServer server;
@@ -31,17 +32,17 @@ public class PacketHandler {
     }
 
     public void addPacket(Packet packet){
-        for (Packet p : packets) {
-            if(packet.getId() == p.getId()){
-                LogUtils.logError("Packet not registered due to duplicate id: " + packet.getId());
-                return;
-            }
+        if(packets.stream().anyMatch(p -> p.getId() == packet.getId())){
+            LogUtils.logError("Packet not registered due to duplicate id: " + packet.getId());
+            return;
         }
         packets.add(packet);
     }
 
     public void handlePacketServer(ClientHandler client, int packetId, ByteBuf byteBuf) throws IOException {
-        for (Packet packet : packets) {
+        Optional<Packet> packetOptional = packets.stream().filter(p -> p.getId() == packetId).findFirst();
+        if(packetOptional.isPresent()){
+            Packet packet = packetOptional.get();
             if(packet.getId() == packetId) {
                 if(encryption != null)
                     packet.fromByteArray(Unpooled.wrappedBuffer(encryption.decrypt(byteBuf.array()))).executeServer(server, client);
@@ -52,7 +53,9 @@ public class PacketHandler {
     }
 
     public void handlePacketClient(MoonClient client, int packetId, ByteBuf byteBuf) throws IOException {
-        for (Packet packet : packets) {
+        Optional<Packet> packetOptional = packets.stream().filter(p -> p.getId() == packetId).findFirst();
+        if(packetOptional.isPresent()){
+            Packet packet = packetOptional.get();
             if(packet.getId() == packetId) {
                 if(encryption != null)
                     packet.fromByteArray(Unpooled.wrappedBuffer(encryption.decrypt(byteBuf.array()))).executeClient(client);
